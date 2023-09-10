@@ -1,9 +1,9 @@
 import "./styles/score-board.css";
 //  Where the score is presented
 
-const incorrectCount = 0;
-const correctCount = 0;
-const answersLeft = ["trout", "salmon", "tuna", "shark"];
+const incorrectCount = 0; //TODO this is a derived value
+const correctCount = 0; //TODO this is a derived value
+const answersLeft = ["trout", "salmon", "tuna", "shark"]; //TODO this is a derived value
 
 export function FunctionalScoreBoard() {
   return (

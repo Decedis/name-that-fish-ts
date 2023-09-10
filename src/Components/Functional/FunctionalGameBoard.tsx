@@ -2,6 +2,8 @@ import "./styles/game-board.css";
 import { Images } from "../../assets/Images";
 
 const initialFishes = [
+  //TODO extract this source of truth to the highest shared component
+  //TODO change the props of this component to accept this truth
   {
     name: "trout",
     url: Images.trout,
@@ -21,7 +23,8 @@ const initialFishes = [
 ];
 
 export function FunctionalGameBoard() {
-  const nextFishToName = initialFishes[0];
+  const nextFishToName = initialFishes[0]; //TODO convert to state or prop
+
   return (
     <div id="game-board">
       <div id="fish-container">
