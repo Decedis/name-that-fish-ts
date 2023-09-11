@@ -1,6 +1,26 @@
 import { FunctionalGameBoard } from "./FunctionalGameBoard";
 import { FunctionalScoreBoard } from "./FunctionalScoreBoard";
 import { FunctionalFinalScore } from "./FunctionalFinalScore";
+import { Images } from "../../assets/Images";
+
+const initialFishes = [
+  {
+    name: "trout",
+    url: Images.trout,
+  },
+  {
+    name: "salmon",
+    url: Images.salmon,
+  },
+  {
+    name: "tuna",
+    url: Images.tuna,
+  },
+  {
+    name: "shark",
+    url: Images.shark,
+  },
+];
 
 export function FunctionalApp() {
   //highest state will live here
@@ -14,7 +34,7 @@ export function FunctionalApp() {
   return (
     <>
       <FunctionalScoreBoard />
-      <FunctionalGameBoard />
+      <FunctionalGameBoard fishData={initialFishes} />
       {false && <FunctionalFinalScore />}
     </>
   );
