@@ -2,7 +2,12 @@ import { FunctionalGameBoard } from "./FunctionalGameBoard";
 import { FunctionalScoreBoard } from "./FunctionalScoreBoard";
 import { FunctionalFinalScore } from "./FunctionalFinalScore";
 import { Images } from "../../assets/Images";
+import { useState } from "react";
 
+export type TFishData = {
+  name: string;
+  url: string;
+};
 const initialFishes = [
   {
     name: "trout",
@@ -31,11 +36,22 @@ export function FunctionalApp() {
     Final Score: correct count, total count
     Game Board: nextFishToGuess
   */
+  const [guesses, setGuesses] = useState<string[]>([]);
   return (
     <>
-      <FunctionalScoreBoard />
-      <FunctionalGameBoard fishData={initialFishes} />
-      {false && <FunctionalFinalScore />}
+      {guesses.length === initialFishes.length ? (
+        <FunctionalFinalScore />
+      ) : (
+        <FunctionalScoreBoard fishData={initialFishes} guesses={guesses} />
+      )}
+      <FunctionalGameBoard
+        fishData={initialFishes}
+        handleData={(retrievedGuess) => {
+          setGuesses((prevGuesses) => {
+            return [...prevGuesses, retrievedGuess];
+          });
+        }}
+      />
     </>
   );
 }

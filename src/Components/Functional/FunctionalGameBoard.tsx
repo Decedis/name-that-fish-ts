@@ -1,13 +1,15 @@
 import "./styles/game-board.css";
 import { useState } from "react";
+import { TFishData } from "./FunctionalApp";
 
-type TFishData = {
-  name: string;
-  url: string;
+type BoardProps = {
+  fishData: TFishData[];
+  handleData: (input: string) => void;
 };
 
-export function FunctionalGameBoard({ fishData }: { fishData: TFishData[] }) {
+export function FunctionalGameBoard({ fishData, handleData }: BoardProps) {
   const [nextFishToName, setNextFishToName] = useState(0);
+  const [localGuess, setLocalGuess] = useState("");
 
   return (
     <div id="game-board">
@@ -24,10 +26,17 @@ export function FunctionalGameBoard({ fishData }: { fishData: TFishData[] }) {
           setNextFishToName((prevFish) => {
             return prevFish < fishData.length - 1 ? prevFish + 1 : 0;
           });
+          handleData(localGuess);
         }}
       >
         <label htmlFor="fish-guess">What kind of fish is this?</label>
-        <input type="text" name="fish-guess" />
+        <input
+          type="text"
+          name="fish-guess"
+          onChange={(e) => {
+            setLocalGuess(e.target.value);
+          }}
+        />
         <input type="submit" />
       </form>
     </div>
