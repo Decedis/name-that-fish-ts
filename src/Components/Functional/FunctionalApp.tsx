@@ -42,16 +42,18 @@ export function FunctionalApp() {
       {guesses.length === initialFishes.length ? (
         <FunctionalFinalScore />
       ) : (
-        <FunctionalScoreBoard fishData={initialFishes} guesses={guesses} />
+        <>
+          <FunctionalScoreBoard fishData={initialFishes} guesses={guesses} />
+          <FunctionalGameBoard
+            fishData={initialFishes}
+            handleData={(retrievedGuess) => {
+              setGuesses((prevGuesses) => {
+                return [...prevGuesses, retrievedGuess];
+              });
+            }}
+          />
+        </>
       )}
-      <FunctionalGameBoard
-        fishData={initialFishes}
-        handleData={(retrievedGuess) => {
-          setGuesses((prevGuesses) => {
-            return [...prevGuesses, retrievedGuess];
-          });
-        }}
-      />
     </>
   );
 }
