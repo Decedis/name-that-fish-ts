@@ -47,7 +47,13 @@ export function FunctionalApp() {
         />
       ) : (
         <>
-          <FunctionalScoreBoard fishData={initialFishes} guesses={guesses} />
+          <FunctionalScoreBoard
+            fishData={initialFishes}
+            guesses={guesses}
+            handleCorrectCount={(count) => {
+              setCorrectCount(count);
+            }}
+          />
           <FunctionalGameBoard
             fishData={initialFishes}
             handleData={(retrievedGuess) => {

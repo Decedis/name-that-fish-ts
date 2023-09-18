@@ -5,7 +5,7 @@ import { TFishData } from "./FunctionalApp";
 type TScoreProps = {
   fishData: TFishData[];
   guesses: string[];
-  handleCorrectCount: (input: number) => number;
+  handleCorrectCount: (input: number) => void;
 };
 //  Where the score is presented
 let incorrectCount = 0;
