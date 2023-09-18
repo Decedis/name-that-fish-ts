@@ -40,7 +40,10 @@ export function FunctionalApp() {
   return (
     <>
       {guesses.length === initialFishes.length ? (
-        <FunctionalFinalScore />
+        <FunctionalFinalScore
+          totalCount={initialFishes.length}
+          correctCount={0}
+        />
       ) : (
         <>
           <FunctionalScoreBoard fishData={initialFishes} guesses={guesses} />
