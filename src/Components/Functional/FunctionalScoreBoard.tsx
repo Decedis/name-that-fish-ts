@@ -7,9 +7,8 @@ type TScoreProps = {
   guesses: string[];
 };
 //  Where the score is presented
-
-let incorrectCount = 0; //TODO this is a derived value
-let correctCount = 0; //TODO this is a derived value
+let incorrectCount = 0;
+let correctCount = 0;
 
 export function FunctionalScoreBoard({ fishData, guesses }: TScoreProps) {
   const [count, setCount] = useState(0);
@@ -41,10 +40,6 @@ export function FunctionalScoreBoard({ fishData, guesses }: TScoreProps) {
       });
     }
   }, [guesses]);
-  //logs for testing
-  // console.log("setCount count: ", count);
-  // console.log("fishData at index: ", fishData[count].name);
-  // console.log("scoreBoard guesses", guesses);
 
   return (
     <div id="score-board">

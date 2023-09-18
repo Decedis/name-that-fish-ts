@@ -27,6 +27,7 @@ export function FunctionalGameBoard({ fishData, handleData }: BoardProps) {
             return prevFish < fishData.length - 1 ? prevFish + 1 : 0;
           });
           handleData(localGuess);
+          setLocalGuess("");
         }}
       >
         <label htmlFor="fish-guess">What kind of fish is this?</label>
@@ -36,6 +37,7 @@ export function FunctionalGameBoard({ fishData, handleData }: BoardProps) {
           onChange={(e) => {
             setLocalGuess(e.target.value);
           }}
+          value={localGuess}
         />
         <input type="submit" />
       </form>
