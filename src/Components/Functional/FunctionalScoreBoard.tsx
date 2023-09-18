@@ -13,13 +13,7 @@ let correctCount = 0; //TODO this is a derived value
 
 export function FunctionalScoreBoard({ fishData, guesses }: TScoreProps) {
   const [count, setCount] = useState(0);
-  const [localFishData, setLocalFishData] = useState(fishData);
-
-  const answersLeft = localFishData.map((fish) => (
-    <div key={fish.name} className="choice">
-      {fish.name}
-    </div>
-  ));
+  const [answers, setAnswers] = useState(fishData);
 
   useEffect(() => {
     if (guesses.length > 0) {
@@ -32,6 +26,21 @@ export function FunctionalScoreBoard({ fishData, guesses }: TScoreProps) {
     }
   }, [guesses]);
 
+  const answersLeft = answers.map((fish) => {
+    return (
+      <div key={fish.name} className="choice">
+        {fish.name}
+      </div>
+    );
+  });
+
+  useEffect(() => {
+    if (guesses.length > 0) {
+      setAnswers((prevAns) => {
+        return prevAns.slice(1);
+      });
+    }
+  }, [guesses]);
   //logs for testing
   // console.log("setCount count: ", count);
   // console.log("fishData at index: ", fishData[count].name);
