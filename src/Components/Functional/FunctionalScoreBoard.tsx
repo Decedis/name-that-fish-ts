@@ -5,12 +5,17 @@ import { TFishData } from "./FunctionalApp";
 type TScoreProps = {
   fishData: TFishData[];
   guesses: string[];
+  handleCorrectCount: (input: number) => number;
 };
 //  Where the score is presented
 let incorrectCount = 0;
 let correctCount = 0;
 
-export function FunctionalScoreBoard({ fishData, guesses }: TScoreProps) {
+export function FunctionalScoreBoard({
+  fishData,
+  guesses,
+  handleCorrectCount,
+}: TScoreProps) {
   const [count, setCount] = useState(0);
   const [answers, setAnswers] = useState(fishData);
 
@@ -40,6 +45,12 @@ export function FunctionalScoreBoard({ fishData, guesses }: TScoreProps) {
       });
     }
   }, [guesses]);
+
+  useEffect(() => {
+    if (guesses.length === fishData.length) {
+      handleCorrectCount(correctCount);
+    }
+  }, [guesses.length, fishData.length, handleCorrectCount]);
 
   return (
     <div id="score-board">

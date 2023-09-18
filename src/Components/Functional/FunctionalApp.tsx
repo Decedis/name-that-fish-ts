@@ -37,12 +37,13 @@ export function FunctionalApp() {
     Game Board: nextFishToGuess
   */
   const [guesses, setGuesses] = useState<string[]>([]);
+  const [correctCount, setCorrectCount] = useState(0);
   return (
     <>
       {guesses.length === initialFishes.length ? (
         <FunctionalFinalScore
           totalCount={initialFishes.length}
-          correctCount={0}
+          correctCount={correctCount}
         />
       ) : (
         <>
