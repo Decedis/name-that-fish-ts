@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./styles/score-board.css";
 import { TFishData } from "./FunctionalApp";
 
@@ -12,27 +12,30 @@ let incorrectCount = 0; //TODO this is a derived value
 let correctCount = 0; //TODO this is a derived value
 
 export function FunctionalScoreBoard({ fishData, guesses }: TScoreProps) {
-  //const [guessCount, setGuessCount] = useState(0);
+  const [count, setCount] = useState(0);
+  const [localFishData, setLocalFishData] = useState(fishData);
 
-  const answersLeft = fishData.map((fish) => (
+  const answersLeft = localFishData.map((fish) => (
     <div key={fish.name} className="choice">
       {fish.name}
     </div>
   ));
 
-  const index = guesses.length || 0;
-  const countUpdate = () =>
-    guesses[index] === fishData[index].name ? correctCount++ : incorrectCount++;
-  countUpdate;
+  useEffect(() => {
+    if (guesses.length > 0) {
+      setCount((prevVal: number) => {
+        guesses[count] === fishData[count].name
+          ? correctCount++
+          : incorrectCount++;
+        return prevVal + 1;
+      });
+    }
+  }, [guesses]);
 
-  console.log("fishData: ", fishData);
-  console.log("guesses: ", guesses);
-  console.log(`
-    "GUESSES === FISHDATA.[GUESSCOUNT].NAME :::> ",
-    Guess: => ${guesses[index]}
-    fishData: => ${fishData[index]}
-    ${guesses[index] === fishData[index].name}
-    `);
+  //logs for testing
+  // console.log("setCount count: ", count);
+  // console.log("fishData at index: ", fishData[count].name);
+  // console.log("scoreBoard guesses", guesses);
 
   return (
     <div id="score-board">

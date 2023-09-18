@@ -6,7 +6,7 @@ type BoardProps = {
   fishData: TFishData[];
   handleData: (input: string) => void;
 };
-
+//TODO wipe input for each guess
 export function FunctionalGameBoard({ fishData, handleData }: BoardProps) {
   const [nextFishToName, setNextFishToName] = useState(0);
   const [localGuess, setLocalGuess] = useState("");
