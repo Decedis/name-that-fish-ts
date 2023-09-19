@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import "./styles/score-board.css";
 import { TFishData } from "./FunctionalApp";
 
@@ -7,29 +7,22 @@ type TScoreProps = {
   guesses: string[];
   handleCorrectCount: (input: number) => void;
 };
-//  Where the score is presented
-let incorrectCount = 0;
-let correctCount = 0;
 
 export function FunctionalScoreBoard({
   fishData,
   guesses,
+
   handleCorrectCount,
 }: TScoreProps) {
-  const [count, setCount] = useState(0);
+  //const [index, setIndex] = useState(0);
+  const [correctCount, setCorrectCount] = useState(0);
+  const [incorrectCount, setIncorrectCount] = useState(0);
   const [answers, setAnswers] = useState(fishData);
-  console.log("ScoreBoard guesses: ", guesses);
 
-  useEffect(() => {
-    if (guesses.length > 0) {
-      setCount((prevVal: number) => {
-        guesses[count] === fishData[count].name
-          ? correctCount++
-          : incorrectCount++;
-        return prevVal + 1;
-      });
-    }
-  }, [guesses]);
+  const index = guesses.length;
+  guesses[index] === fishData[index].name
+    ? setCorrectCount((correctCount) => correctCount + 1)
+    : setIncorrectCount((incorrectCount) => incorrectCount + 1);
 
   const answersLeft = answers.map((fish) => {
     return (
@@ -39,21 +32,15 @@ export function FunctionalScoreBoard({
     );
   });
 
-  useEffect(() => {
-    if (guesses.length > 0) {
-      setAnswers((prevAns) => {
-        return prevAns.slice(1);
-      });
-    }
-  }, [guesses]);
+  if (guesses.length > 0) {
+    setAnswers((prevAns) => {
+      return prevAns.slice(1);
+    });
+  }
 
-  useEffect(() => {
-    if (guesses.length <= fishData.length) {
-      console.log("correctCount gathered!!");
-
-      handleCorrectCount(correctCount);
-    }
-  }, [guesses.length, fishData.length, handleCorrectCount]);
+  if (guesses.length <= fishData.length) {
+    handleCorrectCount(correctCount);
+  }
 
   return (
     <div id="score-board">

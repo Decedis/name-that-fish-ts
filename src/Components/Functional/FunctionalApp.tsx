@@ -28,14 +28,6 @@ const initialFishes = [
 ];
 
 export function FunctionalApp() {
-  //highest state will live here
-  //TODO set state based upon the provided data
-  /*
-    derived data includes: 
-    Score Board: incorrect count, correct count, answers left
-    Final Score: correct count, total count
-    Game Board: nextFishToGuess
-  */
   const [guesses, setGuesses] = useState<string[]>([]);
   const [correctCount, setCorrectCount] = useState(0);
 
@@ -57,7 +49,7 @@ export function FunctionalApp() {
           />
           <FunctionalGameBoard
             fishData={initialFishes}
-            handleData={(retrievedGuess) => {
+            handleGuesses={(retrievedGuess) => {
               setGuesses((prevGuesses) => {
                 return [...prevGuesses, retrievedGuess];
               });

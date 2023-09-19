@@ -4,28 +4,25 @@ import { TFishData } from "./FunctionalApp";
 
 type BoardProps = {
   fishData: TFishData[];
-  handleData: (input: string) => void;
+  handleGuesses: (input: string) => void;
 };
-export function FunctionalGameBoard({ fishData, handleData }: BoardProps) {
-  const [nextFishToName, setNextFishToName] = useState(0);
+export function FunctionalGameBoard({ fishData, handleGuesses }: BoardProps) {
+  const [fishToName, setFishToName] = useState(0);
   const [localGuess, setLocalGuess] = useState("");
 
   return (
     <div id="game-board">
       <div id="fish-container">
-        <img
-          src={fishData[nextFishToName].url}
-          alt={fishData[nextFishToName].name}
-        />
+        <img alt={fishData[fishToName].name} src={fishData[fishToName].url} />
       </div>
       <form
         id="fish-guess-form"
         onSubmit={(e) => {
           e.preventDefault();
-          setNextFishToName((prevFish) => {
-            return prevFish < fishData.length - 1 ? prevFish + 1 : 0;
+          setFishToName((prevFish) => {
+            return prevFish < fishData.length - 1 ? prevFish + 1 : 0; //this might cause an error
           });
-          handleData(localGuess);
+          handleGuesses(localGuess);
           setLocalGuess("");
         }}
       >
