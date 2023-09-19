@@ -38,6 +38,7 @@ export function FunctionalApp() {
   */
   const [guesses, setGuesses] = useState<string[]>([]);
   const [correctCount, setCorrectCount] = useState(0);
+
   return (
     <>
       {guesses.length === initialFishes.length ? (

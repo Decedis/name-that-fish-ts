@@ -18,6 +18,7 @@ export function FunctionalScoreBoard({
 }: TScoreProps) {
   const [count, setCount] = useState(0);
   const [answers, setAnswers] = useState(fishData);
+  console.log("ScoreBoard guesses: ", guesses);
 
   useEffect(() => {
     if (guesses.length > 0) {
@@ -47,7 +48,9 @@ export function FunctionalScoreBoard({
   }, [guesses]);
 
   useEffect(() => {
-    if (guesses.length === fishData.length) {
+    if (guesses.length <= fishData.length) {
+      console.log("correctCount gathered!!");
+
       handleCorrectCount(correctCount);
     }
   }, [guesses.length, fishData.length, handleCorrectCount]);
