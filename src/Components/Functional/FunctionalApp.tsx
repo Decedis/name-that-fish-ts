@@ -30,6 +30,7 @@ const initialFishes = [
 export function FunctionalApp() {
   const [guesses, setGuesses] = useState<string[]>([]);
   const [correctCount, setCorrectCount] = useState(0);
+  const [incorrectCount, setIncorrectCount] = useState(0);
 
   return (
     <>
@@ -41,11 +42,9 @@ export function FunctionalApp() {
       ) : (
         <>
           <FunctionalScoreBoard
-            fishData={initialFishes}
-            guesses={guesses}
-            handleCorrectCount={(count) => {
-              setCorrectCount(count);
-            }}
+            correctCount={correctCount}
+            incorrectCount={incorrectCount}
+            answersLeft={initialFishes.slice(correctCount + incorrectCount)}
           />
           <FunctionalGameBoard
             fishData={initialFishes}
@@ -54,6 +53,10 @@ export function FunctionalApp() {
                 return [...prevGuesses, retrievedGuess];
               });
             }}
+            handleCorrect={(correctCount) => setCorrectCount(correctCount)}
+            handleIncorrect={(inCorrectCount) =>
+              setIncorrectCount(inCorrectCount)
+            }
           />
         </>
       )}
