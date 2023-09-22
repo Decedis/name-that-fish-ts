@@ -1,45 +1,37 @@
 import "./styles/game-board.css";
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import { TFishData } from "./FunctionalApp";
 
 type BoardProps = {
-  fishData: TFishData[];
-  handleGuesses: (input: string) => void;
+  fishToName: TFishData;
+
   handleCorrect: (input: (prevCount: number) => number) => void;
   handleIncorrect: (input: (prevCount: number) => number) => void; //input accepts past number value and returns a number into the outer func which returns void.
 };
 export function FunctionalGameBoard({
-  fishData,
-  handleGuesses,
+  fishToName,
   handleCorrect,
   handleIncorrect,
 }: BoardProps) {
-  const [fishToName, setFishToName] = useState(0);
   const [localGuess, setLocalGuess] = useState("");
 
+  const handleAnswer = (answer: string) => {
+    if (localGuess === fishToName.name) {
+    }
+  };
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    localGuess === fishToName.name
+      ? handleCorrect((correctCount) => correctCount + 1)
+      : handleIncorrect((incorrectCount) => incorrectCount + 1);
+    setLocalGuess("");
+  };
   return (
     <div id="game-board">
       <div id="fish-container">
-        <img alt={fishData[fishToName].name} src={fishData[fishToName].url} />
+        <img alt={fishToName.name} src={fishToName.url} />
       </div>
-      <form
-        id="fish-guess-form"
-        onSubmit={(e) => {
-          e.preventDefault();
-          setFishToName((prevFish) => {
-            return prevFish < fishData.length - 1 ? prevFish + 1 : 0;
-          });
-          console.log(
-            "localGuess[fishToName] === fishData[fishToName].name ::",
-            localGuess[fishToName] === fishData[fishToName].name
-          );
-          handleGuesses(localGuess);
-          localGuess === fishData[fishToName].name
-            ? handleCorrect((correctCount) => correctCount + 1)
-            : handleIncorrect((incorrectCount) => incorrectCount + 1);
-          setLocalGuess("");
-        }}
-      >
+      <form id="fish-guess-form" onSubmit={handleSubmit}>
         <label htmlFor="fish-guess">What kind of fish is this?</label>
         <input
           type="text"

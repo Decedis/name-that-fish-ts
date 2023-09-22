@@ -1,10 +1,9 @@
 import "./styles/score-board.css";
-import { TFishData } from "./FunctionalApp";
 
 type TScoreProps = {
   correctCount: number;
   incorrectCount: number;
-  answersLeft: TFishData[];
+  answersLeft: string[];
 };
 
 export function FunctionalScoreBoard({
@@ -18,8 +17,8 @@ export function FunctionalScoreBoard({
       <div id="choices-left">
         {answersLeft.map((fish) => {
           return (
-            <div key={fish.name} className="choice">
-              {fish.name}
+            <div key={fish} className="choice">
+              {fish}
             </div>
           );
         })}
