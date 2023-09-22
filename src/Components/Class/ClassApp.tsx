@@ -9,7 +9,7 @@ export type TFishData = {
   url: string;
 };
 
-const initialFishes = [
+const initialFishes: TFishData[] = [
   {
     name: "trout",
     url: Images.trout,
