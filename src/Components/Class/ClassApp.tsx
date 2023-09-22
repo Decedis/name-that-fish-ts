@@ -8,11 +8,7 @@ export type TFishData = {
   name: string;
   url: string;
 };
-type AppState = {
-  guesses: Array<string>;
-  incorrectCount: number;
-  correctCount: number;
-};
+
 const initialFishes = [
   {
     name: "trout",
@@ -31,49 +27,47 @@ const initialFishes = [
     url: Images.shark,
   },
 ];
+type AppState = {
+  incorrectCount: number;
+  correctCount: number;
+};
 export class ClassApp extends Component<object, AppState> {
   constructor(props: object) {
     super(props);
     this.state = {
-      guesses: [],
       incorrectCount: 0,
       correctCount: 0,
     };
   }
 
   render() {
-    const { guesses, incorrectCount, correctCount } = this.state;
+    const { incorrectCount, correctCount } = this.state;
+    const fishIndex = correctCount + incorrectCount;
+    const answersLeft = initialFishes.slice(fishIndex).map((fish) => fish.name);
+    const handleAnswer = (answer: string) => {
+      if (answer === initialFishes[fishIndex].name) {
+        this.setState({ correctCount: correctCount + 1 });
+      } else {
+        this.setState({ incorrectCount: incorrectCount + 1 });
+      }
+    };
     return (
       <>
-        {guesses.length === initialFishes.length ? (
+        {fishIndex === initialFishes.length ? (
           <ClassFinalScore
             totalCount={initialFishes.length}
-            correctCount={this.state.correctCount}
+            correctCount={correctCount}
           />
         ) : (
           <>
             <ClassScoreBoard
               correctCount={correctCount}
               incorrectCount={incorrectCount}
-              answersLeft={initialFishes.slice(correctCount + incorrectCount)}
+              answersLeft={answersLeft}
             />
             <ClassGameBoard
-              fishData={initialFishes}
-              handleGuesses={(retrievedGuess: string) => {
-                this.setState((prevGuesses) => ({
-                  guesses: [...prevGuesses.guesses, retrievedGuess],
-                }));
-              }}
-              handleCorrect={() => {
-                this.setState((prevCount) => ({
-                  correctCount: prevCount.correctCount + 1,
-                }));
-              }}
-              handleIncorrect={() => {
-                this.setState((prevCount) => ({
-                  incorrectCount: prevCount.incorrectCount + 1,
-                }));
-              }}
+              fishToName={initialFishes[fishIndex]}
+              handleAnswer={handleAnswer}
             />
           </>
         )}

@@ -34,6 +34,14 @@ export function FunctionalApp() {
   const fishIndex = correctCount + incorrectCount;
   const answersLeft = initialFishes.slice(fishIndex).map((fish) => fish.name);
 
+  const handleAnswer = (answer: string) => {
+    if (answer === initialFishes[fishIndex].name) {
+      setCorrectCount(correctCount + 1);
+    } else {
+      setIncorrectCount(incorrectCount + 1);
+    }
+  };
+
   return (
     <>
       {fishIndex === initialFishes.length ? (
@@ -50,8 +58,7 @@ export function FunctionalApp() {
           />
           <FunctionalGameBoard
             fishToName={initialFishes[fishIndex]}
-            handleCorrect={setCorrectCount}
-            handleIncorrect={setIncorrectCount}
+            handleAnswer={handleAnswer}
           />
         </>
       )}

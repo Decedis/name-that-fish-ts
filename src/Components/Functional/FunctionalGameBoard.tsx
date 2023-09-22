@@ -4,26 +4,14 @@ import { TFishData } from "./FunctionalApp";
 
 type BoardProps = {
   fishToName: TFishData;
-
-  handleCorrect: (input: (prevCount: number) => number) => void;
-  handleIncorrect: (input: (prevCount: number) => number) => void; //input accepts past number value and returns a number into the outer func which returns void.
+  handleAnswer: (answer: string) => void;
 };
-export function FunctionalGameBoard({
-  fishToName,
-  handleCorrect,
-  handleIncorrect,
-}: BoardProps) {
+export function FunctionalGameBoard({ fishToName, handleAnswer }: BoardProps) {
   const [localGuess, setLocalGuess] = useState("");
 
-  const handleAnswer = (answer: string) => {
-    if (localGuess === fishToName.name) {
-    }
-  };
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    localGuess === fishToName.name
-      ? handleCorrect((correctCount) => correctCount + 1)
-      : handleIncorrect((incorrectCount) => incorrectCount + 1);
+    handleAnswer(localGuess);
     setLocalGuess("");
   };
   return (

@@ -1,15 +1,12 @@
-import { Component } from "react";
+import { Component, FormEvent } from "react";
 import "./styles/game-board.css";
 import { TFishData } from "./ClassApp";
 
 type TBoardProps = {
-  fishData: TFishData[];
-  handleGuesses: (input: string) => void;
-  handleCorrect: (input: (prevCount: number) => number) => void;
-  handleIncorrect: (input: (prevCount: number) => number) => void;
+  fishToName: TFishData;
+  handleAnswer: (answer: string) => void;
 };
 type TBoardState = {
-  fishToName: number;
   localGuess: string;
 };
 
@@ -17,40 +14,24 @@ export class ClassGameBoard extends Component<TBoardProps, TBoardState> {
   constructor(props: TBoardProps) {
     super(props);
     this.state = {
-      fishToName: 0, // Default value for 'fishToName'
       localGuess: "", // Default value for 'localGuess'
     };
   }
 
   render() {
-    const { fishToName, localGuess } = this.state;
-    const { fishData, handleGuesses, handleCorrect, handleIncorrect } =
-      this.props;
-    console.log(fishToName);
-
+    const { localGuess } = this.state;
+    const { fishToName, handleAnswer } = this.props;
+    const handleSubmit = (e: FormEvent) => {
+      e.preventDefault();
+      handleAnswer(localGuess);
+      this.setState({ localGuess: "" });
+    };
     return (
       <div id="game-board">
         <div id="fish-container">
-          <img src={fishData[fishToName].url} alt={fishData[fishToName].name} />
+          <img src={fishToName.url} alt={fishToName.name} />
         </div>
-        <form
-          id="fish-guess-form"
-          onSubmit={(e) => {
-            e.preventDefault();
-            this.setState((prevFish) => ({
-              fishToName:
-                prevFish.fishToName < fishData.length - 1
-                  ? prevFish.fishToName + 1
-                  : 0,
-            }));
-
-            handleGuesses(localGuess);
-            localGuess === fishData[fishToName].name
-              ? handleCorrect((correctCount) => correctCount + 1)
-              : handleIncorrect((incorrectCount) => incorrectCount + 1);
-            this.setState({ localGuess: "" });
-          }}
-        >
+        <form id="fish-guess-form" onSubmit={handleSubmit}>
           <label htmlFor="fish-guess">What kind of fish is this?</label>
           <input
             type="text"
